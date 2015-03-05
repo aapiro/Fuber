@@ -26,7 +26,6 @@ public class MongoTest {
         //Taxi taxi = jacksonCollection.findOne();
         //System.out.println(taxi);
         DBCursor<Taxi> cursor = jacksonCollection.find(new BasicDBObject("Taxi.licensePlate", "a1111123"));
-        //ResourceHelper.notFoundIfNull(cursor);
         ArrayList<Taxi> taxis = new ArrayList<Taxi>();
         while(cursor.hasNext())
         {

@@ -36,23 +36,8 @@ public class TaxiResource {
     @GET
     public Response getTaxi(@PathParam("licensePlate") String licensePlate) {
     	
-    	DBCursor cursor = taxiDao.getCollection().find(new BasicDBObject("licensePlate", licensePlate));
+    	ArrayList taxis = taxiDao.fetchAvailableTaxis(licensePlate);
     	
-        ResourceHelper.notFoundIfNull(cursor);
-        
-        ArrayList<Taxi> taxis = new ArrayList<Taxi>();
-        try{
-	        while(cursor.hasNext())
-	        {
-	        	BasicDBObject obj = (BasicDBObject)cursor.next();
-	        	taxis.add(new Taxi(obj.getString("licensePlate"),
-	        			obj.getDouble("latitude"),obj.getDouble("longtitude"),
-	        			obj.getBoolean("isPink"),obj.getBoolean("isOccupied"),
-	        			obj.getBoolean("isActive")));
-	        }
-    	} finally {
-    	   cursor.close();
-    	}
         if(taxis.isEmpty())
         	return Response.status(Response.Status.NO_CONTENT).entity("[{\"status\":\"No Such taxi\"}]").build();
         

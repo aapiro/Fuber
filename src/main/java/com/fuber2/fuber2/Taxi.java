@@ -85,9 +85,9 @@ public class Taxi{
 	
     @Override
     public String toString(){
-        return "{licensePlate:" + licensePlate + ",Latitude:" + 
-        		latitude + ",longitude:" + longitude +",isPink:" + isPink+
-        		",isOccupied:" + isOccupied +",isAvailable:" + isActive +"}";
+        return "{\"licensePlate\":" + licensePlate + ",\"Latitude\":" + 
+        		latitude + ",\"longitude\":" + longitude +",\"isPink\":" + isPink+
+        		",\"isOccupied\":" + isOccupied +",\"isActive\":" + isActive +"}";
 
     }
 

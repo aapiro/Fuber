@@ -1,11 +1,12 @@
 package com.fuber2.fuber2;
 
-import java.util.HashMap;
+import java.util.ArrayList;
 
 import com.mongodb.BasicDBObject;
 import com.mongodb.DB;
 import com.mongodb.DBCollection;
 import com.mongodb.DBCursor;
+
 
 
 public class TaxiDao {
@@ -31,21 +32,58 @@ public class TaxiDao {
 
 	public Taxi save(Taxi taxi,DBCollection col) {
 		
-		BasicDBObject doc = new BasicDBObject("licencePlate", taxi.getLicensePlate())
+		BasicDBObject oldDoc = new BasicDBObject("licensePlate", taxi.getLicensePlate()).append("isActive", true);
+		BasicDBObject doc = new BasicDBObject("licensePlate", taxi.getLicensePlate())
         .append("latitude", taxi.getLatitude())
         .append("longitude", taxi.getLongitude())
         .append("isPink",taxi.isPink())
         .append("isOccupied",taxi.isOccupied())
-        .append("isAvailable",taxi.isActive());
+        .append("isActive",taxi.isActive());
 		System.out.println(doc.toString());
-		col.insert(doc);
+		if(col.findOne(oldDoc) != null)
+			col.update(oldDoc, doc);
+		else
+			col.insert(doc);
+		return taxi;
+	}
+	
+    public Taxi update(Taxi taxi) {
+		
+		BasicDBObject oldDoc = new BasicDBObject("licensePlate", taxi.getLicensePlate()).append("isActive", true);
+		BasicDBObject doc = new BasicDBObject("licensePlate", taxi.getLicensePlate())
+        .append("latitude", taxi.getLatitude())
+        .append("longitude", taxi.getLongitude())
+        .append("isPink",taxi.isPink())
+        .append("isOccupied",taxi.isOccupied())
+        .append("isActive",taxi.isActive());
+		System.out.println(doc.toString());
+		col.update(oldDoc, doc);
+		
 		return taxi;
 	}
 
 
-	public Object fetchTaxi(String licensePlate) {
-		return col.find(new BasicDBObject("licensePlate", licensePlate));
+	public ArrayList<Taxi> fetchAvailableTaxis(String licensePlate) {
+		ArrayList<Taxi> taxis = new ArrayList<Taxi>();
+		BasicDBObject query = new BasicDBObject("licensePlate", licensePlate).append("isActive", true);
+    	DBCursor cursor = col.find(query);
     	
+        ResourceHelper.notFoundIfNull(cursor);
+        
+        
+        try{
+	        while(cursor.hasNext())
+	        {
+	        	BasicDBObject obj = (BasicDBObject)cursor.next();
+	        	taxis.add(new Taxi(obj.getString("licensePlate"),
+	        			obj.getDouble("latitude"),obj.getDouble("longtitude"),
+	        			obj.getBoolean("isPink"),obj.getBoolean("isOccupied"),
+	        			obj.getBoolean("isActive")));
+	        }
+    	} finally {
+    	   cursor.close();
+    	}
+		return taxis;
 	}
 
 	

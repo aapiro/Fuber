@@ -35,7 +35,7 @@ public class FreeTaxiResource {
     public Response free(@PathParam("licenseplate") String licensePlate,@PathParam("latitude") double latitude,@PathParam("longtitude") double longtitude)
     {
     	DBCollection col = db.getCollection("Taxi");
-    	DBCursor cursor = col.find(new BasicDBObject("licensePlate", licensePlate));
+    	DBCursor cursor = col.find(new BasicDBObject("licensePlate", licensePlate).append("isActive", true));
     	Taxi taxi=null;
         ResourceHelper.notFoundIfNull(cursor);
         try{
@@ -52,8 +52,11 @@ public class FreeTaxiResource {
     	} finally {
     	   cursor.close();
     	}	
+        if(taxi==null)
+        	return Response.status(Response.Status.NO_CONTENT).entity("[{\"status\":\"Could not free taxi\"}]").build();
         
-    	return Response.ok("success").entity("["+taxi.toString()+"]").build();
+        return Response.ok("success").entity("["+taxi.toString()+"]").build();
+        
     }
     
 }

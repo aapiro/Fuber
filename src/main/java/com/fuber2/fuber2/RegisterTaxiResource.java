@@ -62,10 +62,10 @@ public class RegisterTaxiResource {
     	} finally {
     	   cursor.close();
     	}	
-        
+        if(taxi==null)
+        	return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity("[{\"status\":\"Sorry could not register at this time\"}]").build();
+       
     	return Response.ok("success").entity("["+taxi.toString()+"]").build();
     }
     
-    
-
 }
