@@ -129,10 +129,8 @@ public class TaxiDao {
 				longitude - distanceRange).append("$lt", longitude
 				+ distanceRange)));
 		obj.add(new BasicDBObject("isPink", isPink));
-		// TODO not removing inactive and occupied taxis
-		// TODO negative coordinate test
-		// obj.add(new BasicDBObject("isActive", true));
-		// obj.add(new BasicDBObject("isOccupied", false));
+		obj.add(new BasicDBObject("isActive", true));
+		obj.add(new BasicDBObject("isOccupied", false));
 		andQuery.put("$and", obj);
 		System.out.println(andQuery.toString());
 

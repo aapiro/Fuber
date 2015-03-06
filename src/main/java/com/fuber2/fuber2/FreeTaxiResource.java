@@ -8,7 +8,7 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
-@Path("/fuber/taxi/free/{licenseplate}/{latitude}/{longtitude}")
+@Path("/fuber/taxi/free/{licenseplate}/{latitude}/{longitude}")
 @Produces(MediaType.APPLICATION_JSON)
 @Consumes(MediaType.APPLICATION_JSON)
 /** 

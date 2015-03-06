@@ -59,7 +59,7 @@ public class Taxi {
 
 	}
 
-	public double distance(double latitude, double longtitude2) {
+	public double distance(double latitude, double longitude2) {
 		return Math.sqrt(Math.pow(latitude - latitude, 2)
 				+ Math.pow(longitude - longitude, 2));
 	}
@@ -73,9 +73,9 @@ public class Taxi {
 				&& that.longitude == this.longitude;
 	}
 
-	public void free(double latitude, double longtitude) {
+	public void free(double latitude, double longitude) {
 		this.latitude = latitude;
-		this.longitude = longtitude;
+		this.longitude = longitude;
 		this.isOccupied = false;
 	}
 
