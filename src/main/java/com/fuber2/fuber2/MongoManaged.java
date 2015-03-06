@@ -3,6 +3,10 @@ package com.fuber2.fuber2;
 import com.mongodb.Mongo;
 import com.yammer.dropwizard.lifecycle.Managed;
 
+/**
+ * @author Dimple Joseph
+ *
+ */
 public class MongoManaged implements Managed {
 
 	private Mongo mongo;

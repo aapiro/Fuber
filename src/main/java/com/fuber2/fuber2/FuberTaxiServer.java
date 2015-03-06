@@ -29,6 +29,7 @@ import com.yammer.dropwizard.lifecycle.Managed;
  * @author Dimple Joseph
  * @version 1.0 3/5/15
  */
+
 public class FuberTaxiServer extends Service<TaxiConfiguration> {
 
 	@Override

@@ -9,6 +9,10 @@ import com.mongodb.DBCollection;
 import com.mongodb.DBCursor;
 import com.mongodb.DBObject;
 
+/**
+ * @author Dimple Joseph
+ *
+ */
 public class TaxiDao {
 	private DB db;
 	private DBCollection col;

@@ -20,6 +20,10 @@ import com.mongodb.DBCursor;
 import com.mongodb.DBObject;
 import com.sun.jersey.api.core.InjectParam;
 
+/**
+ * @author zacharyabraham
+ *
+ */
 @Path("/fuber/taxi/reserve/{latitude}/{longitude}/{isPink}")
 @Produces(MediaType.APPLICATION_JSON)
 @Consumes(MediaType.APPLICATION_JSON)
@@ -35,6 +39,12 @@ public class ReserveTaxiResource {
 		this.taxiDao = taxiDao;
 	}
 
+	/**
+	 * @param latitude
+	 * @param longitude
+	 * @param isPink
+	 * @return
+	 */
 	@SuppressWarnings("unchecked")
 	@GET
 	public Response reserve(@PathParam("latitude") double latitude,
