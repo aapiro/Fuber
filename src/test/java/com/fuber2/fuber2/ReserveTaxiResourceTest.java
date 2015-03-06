@@ -66,5 +66,12 @@ public class ReserveTaxiResourceTest{
         assertThat(resources.client().resource("/fuber/taxi/reserve/-1/-1/true")
         		.get(Taxi.class))
                 .isEqualTo(taxi2);
+        
+      //insert 177,88 .reserve at 200,97 should return 177,88
+        resources.client().resource("/fuber/taxi/register/blah4/-177/88/true").get(Taxi.class);
+        Taxi taxi3 = new Taxi("blah3",177,88,true,true,true);
+        assertThat(resources.client().resource("/fuber/taxi/reserve/200/97/true")
+        		.get(Taxi.class))
+                .isEqualTo(taxi3);
     }
 }
