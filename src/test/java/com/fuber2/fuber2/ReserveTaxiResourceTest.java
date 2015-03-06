@@ -29,7 +29,7 @@ public class ReserveTaxiResourceTest{
     }
 
     @Test
-    public void testreserveTaxi() {
+    public void testReserveTaxi() {
         assertThat(resources.client().resource("/fuber/taxi/reserve/10/20/true").get(Taxi.class))
                 .isEqualTo(taxi);
         verify(dao).fetchActiveTaxiByLocation(10,20,true);
