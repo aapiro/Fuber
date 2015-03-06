@@ -16,6 +16,12 @@ We expect good unit tests
 Unfortunately, you skipped Geography, and believe the earth is flat. The distance between two points can be calculated by Pythagoras' theorem.
 We don't expect a front end for this, but try to build an restful API.
 
+Assumptions
+
+Latitude measures how far north or south of the equator a place is located. The equator is situated at 0°, the North Pole at 90° north (or 90°, because a positive latitude implies north), and the South Pole at 90° south (or –90°). Latitude measurements range from 0° to (+/–)90°.
+Longitude measures how far east or west of the prime meridian a place is located. The prime meridian runs through Greenwich, England. Longitude measurements range from 0° to (+/–)180°.
+
+for simplicity Latitude and longitude coordinates are represented as decimal numbers
 
 Api: Json web service that responds with json message http status code
 
