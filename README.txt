@@ -1,5 +1,7 @@
-Framework:dropwizard +MongoDB - https://dropwizard.github.io/dropwizard/getting-started.html
-
+Framework:dropwizard +MongoDB - 
+https://dropwizard.github.io/dropwizard/getting-started.html
+https://dropwizard.github.io/dropwizard/manual/example.html
+http://code.tutsplus.com/tutorials/getting-started-with-mongodb-part-1--net-22879
 
 Coding challenge:
 
@@ -37,9 +39,17 @@ Api: Json web service that responds with json message http status code
     GET     /fuber/taxi/reserve/{latitude}/{longitude}/{isPink} 
     Reserve taxi within configurable distance range .Try to reserve .Allows a few tries in case new taxis became available and desired taxi was booked
 
-    GET     /fuber/taxi/free/{licenseplate}/{latitude}/{longtitude} 
+    GET     /fuber/taxi/free/{licenseplate}/{latitude}/{longitude} 
     Set taxi as available from drop off location
 
-How to run: execute com.fuber2.fuber2.FuberTaxiServer
+Demo video -https://www.youtube.com/watch?v=FGyuWaWZIu0
 
-TestClasses TaxiResourceTest which tests api response is same getting same info from db
+How to run: execute com.fuber2.fuber2.FuberTaxiServer
+https://dropwizard.github.io/dropwizard/manual/example.html
+
+TestClasses 
+TaxiResourceTest which tests api response is same getting same info from db
+ReserveTaxiResourceTest
+UnregisterTaxiResourceTest
+FreeTaxiResourceTest
+RegisterTaxiResourceTest
