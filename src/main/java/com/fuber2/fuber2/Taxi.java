@@ -1,14 +1,9 @@
 package com.fuber2.fuber2;
 
-import java.util.List;
-
 import net.vz.mongodb.jackson.Id;
 import net.vz.mongodb.jackson.ObjectId;
-
 import javax.validation.constraints.*;
-
 import org.hibernate.validator.constraints.NotEmpty;
-
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 @JsonIgnoreProperties(ignoreUnknown = true)

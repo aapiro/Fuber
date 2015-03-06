@@ -51,10 +51,10 @@ public class FuberTaxiServer extends Service<TaxiConfiguration> {
         Managed mongoManaged = new MongoManaged(mongo);
         environment.manage(mongoManaged);
         environment.addResource(new TaxiResource(new TaxiDao(db)));
-		environment.addResource(new RegisterTaxiResource(db));
-		environment.addResource(new UnRegisterTaxiResource(db));
+		environment.addResource(new RegisterTaxiResource(new TaxiDao(db)));
+		environment.addResource(new UnRegisterTaxiResource(new TaxiDao(db)));
 		environment.addResource(new ReserveTaxiResource(new TaxiDao(db)));
-		environment.addResource(new FreeTaxiResource(db));
+		environment.addResource(new FreeTaxiResource(new TaxiDao(db)));
 		
 	}
 	

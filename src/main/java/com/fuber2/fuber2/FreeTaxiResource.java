@@ -1,7 +1,5 @@
 package com.fuber2.fuber2;
 
-
-
 import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
@@ -10,10 +8,6 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
-import com.mongodb.BasicDBObject;
-import com.mongodb.DB;
-import com.mongodb.DBCollection;
-import com.mongodb.DBCursor;
 
 
 @Path("/fuber/taxi/free/{licenseplate}/{latitude}/{longtitude}")
@@ -21,37 +15,21 @@ import com.mongodb.DBCursor;
 @Consumes(MediaType.APPLICATION_JSON)
 /** 
  * The TaxiResource class implements a restful interface that
- * accepts booking for taxi .
+ * frees the taxi and update location for use by next customer.
  */
 public class FreeTaxiResource {
-	
-	private DB db;
-	private TaxiDao taxiDao = new TaxiDao();
+	private TaxiDao taxiDao;
 
-    public FreeTaxiResource(DB db) {
-        this.db = db;
+    public FreeTaxiResource(TaxiDao taxiDao) {
+        this.taxiDao=taxiDao;
     }
+    
     @GET
-    public Response free(@PathParam("licenseplate") String licensePlate,@PathParam("latitude") double latitude,@PathParam("longtitude") double longtitude)
+    public Response free(@PathParam("licenseplate") String licensePlate,@PathParam("latitude") double latitude,
+    		@PathParam("longitude") double longitude)
     {
-    	DBCollection col = db.getCollection("Taxi");
-    	DBCursor cursor = col.find(new BasicDBObject("licensePlate", licensePlate).append("isActive", true));
-    	Taxi taxi=null;
-        ResourceHelper.notFoundIfNull(cursor);
-        try{
-	        while(cursor.hasNext())
-	        {
-	        	BasicDBObject obj = (BasicDBObject)cursor.next();
-	        	taxi = new Taxi(obj.getString("licensePlate"),
-	        			obj.getDouble("latitude"),obj.getDouble("longtitude"),
-	        			obj.getBoolean("isPink"),obj.getBoolean("isOccupied"),
-	        			obj.getBoolean("isActive"));
-	        	taxi.free(latitude, longtitude);
-	        	taxiDao.save(taxi,col);
-	        }
-    	} finally {
-    	   cursor.close();
-    	}	
+    	Taxi taxi = taxiDao.freeTaxi(licensePlate,latitude,longitude);
+    	
         if(taxi==null)
         	return Response.status(Response.Status.NO_CONTENT).entity("[{\"status\":\"Could not free taxi\"}]").build();
         

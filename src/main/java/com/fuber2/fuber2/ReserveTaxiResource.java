@@ -41,50 +41,25 @@ public class ReserveTaxiResource {
 	@GET
     public Response reserve(@PathParam("latitude") double latitude,@PathParam("longitude") double longitude,@PathParam("isPink") boolean isPink) 
     {
-    	int distanceRange = 10;
+    	ArrayList<Taxi> taxis = new ArrayList<Taxi>();
     	int max_tries = 3;
     	int tries =0;
     	//get all taxis in within 30 mile square.Do it 3 tries and give up
     	while(tries < max_tries)
     	{
-    		BasicDBObject andQuery = new BasicDBObject();
-    		  List<BasicDBObject> obj = new ArrayList<BasicDBObject>();
-    		  obj.add(new BasicDBObject("latitude", new BasicDBObject("$gt",latitude-distanceRange ).append("$lt", latitude+distanceRange)));
-    		  obj.add(new BasicDBObject("longitude", new BasicDBObject("$gt",longitude-distanceRange ).append("$lt", longitude+distanceRange)));
-    		  obj.add(new BasicDBObject("isPink", isPink));
-    		  //TODO not removing inactive and occupied taxis
-    		  //TODO negative coordinate test
-    		  //obj.add(new BasicDBObject("isActive", true));
-    		  //obj.add(new BasicDBObject("isOccupied", false));
-    		  andQuery.put("$and", obj);
-    		  System.out.println(andQuery.toString());
-    		
-    		DBCursor cursor = taxiDao.getCollection().find(andQuery);
-
-        	
-        	List<Taxi> taxis = new ArrayList<Taxi>();
-            if (cursor.hasNext()) {
-            	BasicDBObject obj1=(BasicDBObject)cursor.next();
-            	System.out.println(obj1);
-	        	taxis.add(new Taxi(obj1.getString("licensePlate"),
-	        			obj1.getDouble("latitude"),
-	        			obj1.getDouble("longitude"),
-	        			obj1.getBoolean("isPink"),
-	        			obj1.getBoolean("isOccupied"),
-	        			obj1.getBoolean("isActive")));
-            }
+    		taxis = taxiDao.reserveTaxi(latitude, longitude, isPink);
     		if(taxis !=null && !taxis.isEmpty())
     		{
     			TaxiDistanceComparator c = new TaxiDistanceComparator(latitude, longitude);
     			Collections.sort(taxis,c);
-    			//in the sortedcandidates go through list and try to reserve inorder 
+    			//in the sorted candidates go through list and try to reserve inorder 
     			//iterate remove first try to reserve .keep trying 
     			for(Taxi taxi : taxis) {
-    				cursor = taxiDao.getCollection().find(new BasicDBObject("licensePlate", taxi.getLicensePlate()).append("isOccupied", false));
-    	            if (cursor.hasNext()) {
+    				Object obj = taxiDao.findUnOccupiedTaxi(taxi.getLicensePlate());
+    				if (obj != null) {
     	            	taxi.reserve();
     	            	taxiDao.save(taxi);
-    	            	return Response.ok("[\"status\":\"Your reservation was successful, "+taxi.toString()+"]").build();
+    	            	return Response.ok("[{\"status\":\"Your reservation was successful, "+taxi.toString()+"}]").build();
     	            }
     				
     			}
