@@ -34,19 +34,37 @@ public class ReserveTaxiResourceTest{
     public void testReserveTaxi() {
     	
     	//System.out.println(resources.client().resource("/fuber/taxi/reserve/10/20/true").get(Taxi.class));
-        //assertThat(resources.client().resource("/fuber/taxi/reserve/10/20/true")
-        		//.get(Taxi.class))
-                //.isEqualTo(taxi);
+        assertThat(resources.client().resource("/fuber/taxi/reserve/10/20/true")
+        		.get(Taxi.class))
+                .isEqualTo(taxi);
         verify(dao).fetchActiveTaxiByLocation(10,20,true);
         
         //assert even if you provide location as 240 320 values are corrected to +-180,+-90,
+        //assertThat(resources.client().resource("/fuber/taxi/reserve/240/320/true")
+        		//.get(Taxi.class))
+                //.has("\"Latitude\":180");
         
         //assert reserved cab not available with a repeat request till its free
+        //assertThat(resources.client().resource("/fuber/taxi/reserve/10/20/true")
+        		//.get(Taxi.class))
+                //.has("not available");
         
         //If there are no taxis available, you reject the customers request.
         
         //insert 10,20 and 20,30 .reserve at 10,10 should return 10,20
+        resources.client().resource("/fuber/taxi/register/blah1/10/20/true").get(Taxi.class);
+        resources.client().resource("/fuber/taxi/register/blah2/10/20/true").get(Taxi.class);
+        Taxi taxi1 = new Taxi("blah1",10,20,true,true,true);
+        assertThat(resources.client().resource("/fuber/taxi/reserve/10/20/true")
+        		.get(Taxi.class))
+                .isEqualTo(taxi1);
         
         //insert -5,-5 and -15,-30 .reserve at -1,-1 should return -5,-5
+        resources.client().resource("/fuber/taxi/register/blah3/-5/-5/true").get(Taxi.class);
+        resources.client().resource("/fuber/taxi/register/blah4/-15/-30/true").get(Taxi.class);
+        Taxi taxi2 = new Taxi("blah3",-5,-5,true,true,true);
+        assertThat(resources.client().resource("/fuber/taxi/reserve/-1/-1/true")
+        		.get(Taxi.class))
+                .isEqualTo(taxi2);
     }
 }
