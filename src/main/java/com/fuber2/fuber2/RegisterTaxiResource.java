@@ -18,20 +18,28 @@ import javax.ws.rs.core.Response;
 public class RegisterTaxiResource {
 	private TaxiDao taxiDao;
 
-    public RegisterTaxiResource(TaxiDao taxiDao) {
-        this.taxiDao=taxiDao;
-    }
-    
-    //if already registered update to new location else insert
-    @GET
-    public Response registerTaxi(@PathParam("licensePlate") String licensePlate,@PathParam("latitude") double latitude,@PathParam("longitude") double longitude,@PathParam("isPink") boolean isPink) 
-    {
+	public RegisterTaxiResource(TaxiDao taxiDao) {
+		this.taxiDao = taxiDao;
+	}
 
-        Taxi taxi = taxiDao.registerTaxi(licensePlate,latitude,longitude,isPink);
-        if(taxi==null)
-        	return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity("[{\"status\":\"Sorry could not register at this time\"}]").build();
-       
-    	return Response.ok("success").entity("["+taxi.toString()+"]").build();
-    }
-    
+	// if already registered update to new location else insert
+	@GET
+	public Response registerTaxi(
+			@PathParam("licensePlate") String licensePlate,
+			@PathParam("latitude") double latitude,
+			@PathParam("longitude") double longitude,
+			@PathParam("isPink") boolean isPink) {
+
+		Taxi taxi = taxiDao.registerTaxi(licensePlate, latitude, longitude,
+				isPink);
+		if (taxi == null)
+			return Response
+					.status(Response.Status.INTERNAL_SERVER_ERROR)
+					.entity("[{\"status\":\"Sorry could not register at this time\"}]")
+					.build();
+
+		return Response.ok("success").entity("[" + taxi.toString() + "]")
+				.build();
+	}
+
 }

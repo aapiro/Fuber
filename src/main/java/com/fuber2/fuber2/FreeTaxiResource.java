@@ -8,8 +8,6 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
-
-
 @Path("/fuber/taxi/free/{licenseplate}/{latitude}/{longtitude}")
 @Produces(MediaType.APPLICATION_JSON)
 @Consumes(MediaType.APPLICATION_JSON)
@@ -20,21 +18,23 @@ import javax.ws.rs.core.Response;
 public class FreeTaxiResource {
 	private TaxiDao taxiDao;
 
-    public FreeTaxiResource(TaxiDao taxiDao) {
-        this.taxiDao=taxiDao;
-    }
-    
-    @GET
-    public Response free(@PathParam("licenseplate") String licensePlate,@PathParam("latitude") double latitude,
-    		@PathParam("longitude") double longitude)
-    {
-    	Taxi taxi = taxiDao.freeTaxi(licensePlate,latitude,longitude);
-    	
-        if(taxi==null)
-        	return Response.status(Response.Status.NO_CONTENT).entity("[{\"status\":\"Could not free taxi\"}]").build();
-        
-        return Response.ok("success").entity("["+taxi.toString()+"]").build();
-        
-    }
-    
+	public FreeTaxiResource(TaxiDao taxiDao) {
+		this.taxiDao = taxiDao;
+	}
+
+	@GET
+	public Response free(@PathParam("licenseplate") String licensePlate,
+			@PathParam("latitude") double latitude,
+			@PathParam("longitude") double longitude) {
+		Taxi taxi = taxiDao.freeTaxi(licensePlate, latitude, longitude);
+
+		if (taxi == null)
+			return Response.status(Response.Status.NO_CONTENT)
+					.entity("[{\"status\":\"Could not free taxi\"}]").build();
+
+		return Response.ok("success").entity("[" + taxi.toString() + "]")
+				.build();
+
+	}
+
 }

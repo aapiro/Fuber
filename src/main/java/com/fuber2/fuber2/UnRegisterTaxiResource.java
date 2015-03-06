@@ -18,15 +18,16 @@ import javax.ws.rs.core.Response;
 public class UnRegisterTaxiResource {
 	private TaxiDao taxiDao;
 
-    public UnRegisterTaxiResource(TaxiDao taxiDao) {
-        this.taxiDao=taxiDao;
-    }
+	public UnRegisterTaxiResource(TaxiDao taxiDao) {
+		this.taxiDao = taxiDao;
+	}
 
-    @GET
-    public Response unregisterTaxi(@PathParam("licenseplate") String licensePlate) 
-    {
-    	Taxi taxi = taxiDao.unregisterTaxi(licensePlate);
-    	return Response.ok("success").entity("{\"data\":"+taxi.toString()+"}").build();
-    }
+	@GET
+	public Response unregisterTaxi(
+			@PathParam("licenseplate") String licensePlate) {
+		Taxi taxi = taxiDao.unregisterTaxi(licensePlate);
+		return Response.ok("success")
+				.entity("{\"data\":" + taxi.toString() + "}").build();
+	}
 
 }
