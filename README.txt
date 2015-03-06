@@ -1,7 +1,7 @@
-Framework:dropwizard - https://dropwizard.github.io/dropwizard/getting-started.html
+Framework:dropwizard +MongoDB - https://dropwizard.github.io/dropwizard/getting-started.html
 
 
-Here's the coding challenge:
+Coding challenge:
 
 You are the proprietor of füber, an on call taxi service.
 You have a fleet of cabs at your disposal, and each cab has a location, determined by it's latitude and longitude.

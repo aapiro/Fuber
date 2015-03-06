@@ -35,10 +35,12 @@ public class ReserveTaxiResourceTest{
         verify(dao).fetchActiveTaxiByLocation(10,20,true);
         
         //assert even if you provide location as 240 320 values are corrected to +-90,+-180
-        //assertThat(resources.client().resource("/fuber/taxi/reserve/100/200/true").get(Taxi.class))
-        //isEqualTo(taxi);
+        
+        //assert reserved cab not available with a repeat request till its free
+        
+        //If there are no taxis available, you reject the customers request.
         
         //insert 10,20 and 20,30 .reserve at 10,10 should return 10,20
-      //insert -5,-5 and -15,-30 .reserve at -1,-1 should return -5,-5
+        //insert -5,-5 and -15,-30 .reserve at -1,-1 should return -5,-5
     }
 }
