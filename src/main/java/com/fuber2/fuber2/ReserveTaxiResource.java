@@ -47,7 +47,7 @@ public class ReserveTaxiResource {
     	//get all taxis in within 30 mile square.Do it 3 tries and give up
     	while(tries < max_tries)
     	{
-    		taxis = taxiDao.reserveTaxi(latitude, longitude, isPink);
+    		taxis = taxiDao.reserveTaxi(Taxi.isValidLatitude(latitude), Taxi.isValidLongitude(longitude), isPink);
     		if(taxis !=null && !taxis.isEmpty())
     		{
     			TaxiDistanceComparator c = new TaxiDistanceComparator(latitude, longitude);

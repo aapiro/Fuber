@@ -38,7 +38,7 @@ public class Taxi{
 		
 	}
 	
-	private double isValidLatitude(double latitude)
+	public static double isValidLatitude(double latitude)
 	{ 
 		if(latitude < -180)
 			return -180;
@@ -47,7 +47,7 @@ public class Taxi{
 		return latitude;
 	}
 	
-	private double isValidLongitude(double longitude)
+	public static double isValidLongitude(double longitude)
 	{ 
 		if(longitude < -90)
 			return -90;
