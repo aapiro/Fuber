@@ -47,7 +47,7 @@ Demo video -https://www.youtube.com/watch?v=FGyuWaWZIu0
 How to run: execute com.fuber2.fuber2.FuberTaxiServer
 https://dropwizard.github.io/dropwizard/manual/example.html
 
-TestClasses 
+Tests
 TaxiResourceTest which tests api response is same getting same info from db
 ReserveTaxiResourceTest
 UnregisterTaxiResourceTest
